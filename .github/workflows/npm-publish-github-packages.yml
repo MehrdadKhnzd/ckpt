@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun i
+      - run: bun run build
 
   publish-gpr:
     needs: build
@@ -23,12 +22,11 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
           registry-url: https://npm.pkg.github.com/
           scope: ${{ github.repository_owner }}
-      - run: npm ci
-      - run: npm publish
+      - run: bun i
+      - run: bun publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          BUN_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
