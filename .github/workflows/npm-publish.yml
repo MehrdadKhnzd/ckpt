@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: read
     steps:
+      - working-directory: ./packages/cli
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
 
