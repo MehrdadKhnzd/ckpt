@@ -12,13 +12,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - run: npm ci
-      - run: npm run build   # optional if you rely on "prepare"
+      - run: bun i
+      - run: bun run build   # optional if you rely on "prepare"
 
   publish-npm:
     needs: build
@@ -28,15 +25,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - run: npm ci           # installs deps & triggers "prepare"
+      - run: bun i           # installs deps & triggers "prepare"
       # - run: npm run build  # uncomment if you did NOT define a "prepare" script
 
       # for scoped packages add "--access public" *once*
-      - run: npm publish --access public
+      - run: bun publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          BUN_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
