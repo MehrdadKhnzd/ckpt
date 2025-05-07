@@ -2,8 +2,9 @@
 name: ckpt-release
 
 on:
-  release:
-    types: [created]   # triggers when you publish a new GitHub Release
+  push:
+    branches:
+      - main
 
 jobs:
   build:
