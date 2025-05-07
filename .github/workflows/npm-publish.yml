@@ -12,10 +12,10 @@ jobs:
     permissions:
       contents: read
     steps:
-      - working-directory: ./packages/cli
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
 
+      - working-directory: ./packages/cli
       - run: bun i
       - run: bun run build   # optional if you rely on "prepare"
 
@@ -26,11 +26,11 @@ jobs:
       contents: read          # always good to be explicit
     steps:
       - uses: actions/checkout@v4
-
       - uses: oven-sh/setup-bun@v2
         with:
           registry-url: https://registry.npmjs.org/
 
+      - working-directory: ./packages/cli
       - run: bun i           # installs deps & triggers "prepare"
       # - run: npm run build  # uncomment if you did NOT define a "prepare" script
 
