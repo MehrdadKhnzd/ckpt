@@ -1,0 +1,42 @@
+# .github/workflows/publish.yml
+name: ckpt-release
+
+on:
+  release:
+    types: [created]   # triggers when you publish a new GitHub Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+      - run: npm run build   # optional if you rely on "prepare"
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read          # always good to be explicit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci           # installs deps & triggers "prepare"
+      # - run: npm run build  # uncomment if you did NOT define a "prepare" script
+
+      # for scoped packages add "--access public" *once*
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
