@@ -1,0 +1,29 @@
+{
+  "name": "cli",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/fs-extra": "^11.0.4",
+    "@types/which": "^3.0.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.2",
+    "commander": "^13.1.0",
+    "dompurify": "^3.2.5",
+    "execa": "^9.5.2",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0",
+    "ignore": "^7.0.4",
+    "linkedom": "^0.18.10",
+    "lowdb": "^7.0.1",
+    "mermaid": "^11.6.0",
+    "nanoid": "^5.1.5",
+    "open": "^10.1.2",
+    "which": "^5.0.0"
+  }
+}
