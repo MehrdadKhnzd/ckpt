@@ -2,7 +2,13 @@
   "name": "cli",
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "main": "dist/index.js",
+  "bin": { "cli": "dist/index.js" },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/fs-extra": "^11.0.4",
