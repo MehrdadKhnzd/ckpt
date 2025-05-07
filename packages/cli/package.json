@@ -1,6 +1,6 @@
 {
   "name": "ckpt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "module": "index.ts",
   "type": "module",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
   },
   "files": ["dist", "README.md"],
   "scripts": {
-    "build": "esbuild index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js --banner:js='#!/usr/bin/env node'",
+    "build": "esbuild index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
