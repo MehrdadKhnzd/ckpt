@@ -81,7 +81,7 @@ async function restoreWorkspace(files: FileEntry[]) {
 
 const program = new Command()
   .name('ckpt')
-  .description('Local lightweight git-less “checkpoint” system (lowdb edition)')
+  .description('Local lightweight “checkpoint” system')
   .version('0.2.0');
 
 program
@@ -117,7 +117,7 @@ program
 
     await regenerateMermaid();
 
-    console.log('Initialised ckpt repository with root snapshot "$".');
+    console.log('Initialized ckpt repository with root snapshot "$".');
   });
 
 program
@@ -185,7 +185,7 @@ program
 
 program
   .command('show')
-  .description('Rebuild Mermaid diagram and open it')
+  .description('rebuild Mermaid diagram and open it')
   .action(async () => {
     await regenerateMermaid()
     if (await fs.pathExists(SVG)) {
