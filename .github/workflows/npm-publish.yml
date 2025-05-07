@@ -51,5 +51,5 @@ jobs:
           cd packages/cli
           bun publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Bun also respects NPM_TOKEN; use whichever secret name you prefer
