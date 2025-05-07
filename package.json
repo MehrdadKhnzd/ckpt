@@ -14,7 +14,6 @@
     ]
   },
   "dependencies": {
-    "hono": "^4.7.8",
-    "ui": "workspace:*"
+    "hono": "^4.7.8"
   }
 }
