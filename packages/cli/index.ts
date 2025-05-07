@@ -138,7 +138,7 @@ program
     await database.write();
     await regenerateMermaid();
 
-    console.log(`Snapshot ${id.slice(0, 8)} created (parent ${parent}).`);
+    console.log(`Snapshot ...${id.slice(0, 8)} created (parent ${parent}).`);
   });
 
 program
