@@ -1,10 +1,11 @@
-# .github/workflows/publish.yml
 name: ckpt-release
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]          # run on every push to main
+  # or, if you prefer releases:
+  # release:
+  #   types: [created]
 
 jobs:
   build:
@@ -13,28 +14,42 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
 
-      - working-directory: ./packages/cli
-      - run: bun i
-      - run: bun run build   # optional if you rely on "prepare"
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest   # or a pinned version, e.g. "1.0.25"
+
+      # Install deps for all workspaces (root of repo)
+      - name: Install dependencies
+        run: bun install
+
+      # Build ONLY the cli workspace
+      - name: Build cli package
+        run: bun run build
+        working-directory: packages/cli
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: read          # always good to be explicit
+      contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          registry-url: https://registry.npmjs.org/
+          bun-version: latest
 
-      - working-directory: ./packages/cli
-      - run: bun i           # installs deps & triggers "prepare"
-      # - run: npm run build  # uncomment if you did NOT define a "prepare" script
+      - name: Install dependencies
+        run: bun install
 
-      # for scoped packages add "--access public" *once*
-      - run: bun publish --access public
+      # Publish only the cli workspace
+      - name: Publish cli to npm
+        run: |
+          cd packages/cli
+          bun publish --access public
         env:
-          BUN_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Bun also respects NPM_TOKEN; use whichever secret name you prefer
